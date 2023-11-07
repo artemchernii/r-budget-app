@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 import Balance from '../Balance';
 import Transactions from '../Transactions/Transactions';
 import Form from '../Form';
@@ -6,27 +6,18 @@ import { HomeDiv } from './style';
 import ErrorBoundary from '../ErrorBoundaries';
 import { addItem, getItems } from '../../utils/indexdb';
 
-class Home extends Component {
-    constructor() {
-        super();
-        this.state = {
-            balance: 0,
-            transactions: [],
-        };
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-    componentDidMount() {
+export default function Home() {
+    const [balance, setBalance] = useState(0);
+    const [transactions, setTransactions] = useState([]);
+    useEffect(() => {
         getItems()
-            .then((transactions) => {
-                this.setState({
-                    ...this.state,
-                    transactions,
-                });
+            .then((items) => {
+                setTransactions(items);
             })
             .catch((e) => console.error(e));
-    }
+    }, [setTransactions]);
 
-    handleSubmit = ({ balance, date, comment }) => {
+    const handleSubmit = ({ balance, date, comment }) => {
         const transaction = {
             label: 'Balance increased by',
             value: +balance,
@@ -34,26 +25,23 @@ class Home extends Component {
             comment,
             id: Date.now(),
         };
-        this.setState({
-            ...this.state,
-            balance: this.state.balance + balance,
-            transactions: [transaction, ...this.state.transactions],
-        });
+
+        setBalance((c) => c + balance);
+        setTransactions((currentTransactions) => [
+            transaction,
+            ...currentTransactions,
+        ]);
         addItem(transaction);
     };
-    render() {
-        console.log('rendering');
-        return (
-            <ErrorBoundary>
-                <HomeDiv>
-                    <Balance balance={+this.state.balance} />
-                    <Form handleSubmit={this.handleSubmit} />
-                    {this.state.transactions.length > 0 && (
-                        <Transactions transactions={this.state.transactions} />
-                    )}
-                </HomeDiv>
-            </ErrorBoundary>
-        );
-    }
+    return (
+        <ErrorBoundary>
+            <HomeDiv>
+                <Balance balance={+balance} />
+                <Form handleSubmit={handleSubmit} />
+                {transactions.length > 0 && (
+                    <Transactions transactions={transactions} />
+                )}
+            </HomeDiv>
+        </ErrorBoundary>
+    );
 }
-export default Home;

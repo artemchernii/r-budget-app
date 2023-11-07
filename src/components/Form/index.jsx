@@ -1,73 +1,76 @@
 import propTypes from 'prop-types';
-import { Component } from 'react';
+import { useState } from 'react';
 import './style.css';
 
-class Form extends Component {
-    constructor() {
-        super();
-        this.state = {
-            balance: 0,
-            date: new Date().toISOString().substring(0, 10),
-            comment: '',
-        };
-    }
-    handleSubmit = (e) => {
+export default function Form({ handleSubmit }) {
+    const [form, setForm] = useState({
+        balance: 0,
+        date: new Date().toISOString().substring(0, 10),
+        comment: '',
+    });
+
+    const onSubmit = (e) => {
         e.preventDefault();
-        this.props.handleSubmit(this.state);
+        handleSubmit(form);
         setTimeout(() => {
-            this.setState({
+            setForm({
                 balance: 0,
                 date: new Date().toISOString().substring(0, 10),
                 comment: '',
             });
         }, 400);
     };
-    handleBalanceChange = (e) => {
-        const { name, value, type } = e.target;
-        this.setState({
-            ...this.state,
-            [name]: type === 'number' ? +value : value,
+    const handleBalanceChange = (e) => {
+        const { name, value } = e.target;
+        setForm((c) => {
+            return {
+                ...c,
+                [name]: value,
+                // [name]: type === 'number' ? +value : value,
+            };
         });
     };
-    render() {
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <div className="input-container">
-                    <input
-                        type="date"
-                        className="material-input"
-                        required
-                        name="date"
-                        value={this.state.date}
-                        onChange={this.handleBalanceChange}
-                    />
-                    <label className="material-label">Date</label>
-                </div>
-                <div className="input-container">
-                    <input
-                        type="number"
-                        className="material-input"
-                        required
-                        name="balance"
-                        value={this.state.balance}
-                        onChange={this.handleBalanceChange}
-                    />
-                    <label className="material-label">New sum</label>
-                </div>
-                <div className="input-container">
-                    <textarea
-                        className="material-input"
-                        required
-                        name="comment"
-                        value={this.state.comment}
-                        onChange={this.handleBalanceChange}
-                    />
-                    <label className="material-label">Comment</label>
-                </div>
-                <button type="submit">Save</button>
-            </form>
-        );
-    }
+
+    return (
+        <form onSubmit={onSubmit} title="test-form">
+            <div className="input-container">
+                <input
+                    type="date"
+                    className="material-input"
+                    required
+                    name="date"
+                    value={form.date}
+                    onChange={handleBalanceChange}
+                />
+                <label className="material-label">Date</label>
+            </div>
+            <div className="input-container">
+                <input
+                    type="number"
+                    className="material-input"
+                    required
+                    name="balance"
+                    value={form.balance}
+                    onChange={handleBalanceChange}
+                    id="balance"
+                />
+                <label htmlFor="balance" className="material-label">
+                    New sum
+                </label>
+            </div>
+            <div className="input-container">
+                <textarea
+                    className="material-input"
+                    required
+                    name="comment"
+                    value={form.comment}
+                    onChange={handleBalanceChange}
+                />
+                <label className="material-label">Comment</label>
+            </div>
+            <button type="submit">Save</button>
+        </form>
+    );
 }
 
 Form.propTypes = {
@@ -76,5 +79,3 @@ Form.propTypes = {
 Form.defaultProp = {
     handleSubmit: () => {},
 };
-
-export default Form;
