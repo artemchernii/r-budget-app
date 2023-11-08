@@ -1,14 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Balance from '../Balance';
 import Transactions from '../Transactions/Transactions';
 import Form from '../Form';
 import { HomeDiv } from './style';
 import ErrorBoundary from '../ErrorBoundaries';
 import { addItem, getItems } from '../../utils/indexdb';
+import {
+    ACTIONS,
+    currencyContext,
+} from '../../providers/context/defaultContext';
 
 export default function Home() {
     const [balance, setBalance] = useState(0);
     const [transactions, setTransactions] = useState([]);
+    const {
+        state: { currency },
+        dispatch,
+    } = useContext(currencyContext);
     useEffect(() => {
         getItems()
             .then((items) => {
@@ -41,10 +49,35 @@ export default function Home() {
         ]);
         addItem(transaction);
     };
+    const handleChangeCurrency = () => {
+        dispatch({
+            type: ACTIONS.CHANGE,
+            payload: 'USD',
+        });
+    };
     return (
         <ErrorBoundary>
             <HomeDiv>
-                <Balance data-testid="balance" balance={+balance} />
+                <Balance
+                    data-testid="balance"
+                    balance={+balance}
+                    currency={currency}
+                />
+
+                <div
+                    className="flex"
+                    style={{
+                        display: 'flex',
+                        width: '100%',
+                        justifyContent: 'center',
+                        margin: '30px 0',
+                    }}
+                >
+                    <button onClick={handleChangeCurrency}>
+                        Change currency
+                    </button>
+                </div>
+
                 <Form handleSubmit={handleSubmit} />
                 {transactions.length > 0 && (
                     <Transactions transactions={transactions} />

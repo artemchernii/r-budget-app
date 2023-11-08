@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import propTypes from 'prop-types';
 import { BalanceDiv } from './style';
-export default function Balance({ balance }) {
+export default function Balance({ balance, currency }) {
     return (
         <div>
             <BalanceDiv
@@ -9,7 +9,7 @@ export default function Balance({ balance }) {
                 data-title="balance"
                 data-testid="balance"
             >
-                Current balance: {balance}
+                Current balance: {balance} {currency}
             </BalanceDiv>
         </div>
     );
@@ -17,8 +17,10 @@ export default function Balance({ balance }) {
 
 Balance.propTypes = {
     balance: propTypes.number.isRequired,
+    currency: propTypes.string,
 };
 
 Balance.defaultProp = {
     balance: 0,
+    currency: 'UAH',
 };

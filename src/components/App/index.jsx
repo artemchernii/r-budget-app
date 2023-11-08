@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 
 import { open } from '../../utils/indexdb';
 import Spinner from '../Spinner';
+import { CurrencyProvider } from '../../providers/context';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -53,7 +54,9 @@ const App = () => {
     return (
         <Wrapper>
             <GlobalStyle />
-            <RouterProvider router={router} />
+            <CurrencyProvider>
+                <RouterProvider router={router} />
+            </CurrencyProvider>
         </Wrapper>
     );
 };
