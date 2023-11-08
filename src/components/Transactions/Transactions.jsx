@@ -4,7 +4,11 @@ import { TransactionList } from './style';
 
 const Transactions = ({ transactions = [] }) => {
     return (
-        <TransactionList additionalprop={'rounded'} color={'#fff'}>
+        <TransactionList
+            additionalprop={'rounded'}
+            title="transactions"
+            color={'#fff'}
+        >
             {transactions.map((t) => (
                 <Transaction
                     key={t.id}

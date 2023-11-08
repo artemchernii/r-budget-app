@@ -9,7 +9,11 @@ import {
 } from './style';
 export default function Transaction({ value, date, comment }) {
     return (
-        <TransactionWrapper value={value} className={style.transaction}>
+        <TransactionWrapper
+            data-testid="transaction"
+            value={value}
+            className={style.transaction}
+        >
             <TransactionValue data-testid="Value">
                 {value.toFixed(2)}
             </TransactionValue>

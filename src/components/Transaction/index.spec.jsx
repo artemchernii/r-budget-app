@@ -20,7 +20,6 @@ describe('Transaction component', () => {
 
     it('should show 2 zeros after amount', () => {
         const value = screen.getByTestId('Value').textContent;
-        console.log('value', value);
         expect(value).toBe('23.00');
     });
 });

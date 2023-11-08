@@ -12,9 +12,17 @@ export default function Home() {
     useEffect(() => {
         getItems()
             .then((items) => {
+                setBalance(
+                    items.reduce((acc, item) => {
+                        return Number(acc) + +item.value;
+                    }, 0)
+                );
                 setTransactions(items);
             })
-            .catch((e) => console.error(e));
+            .catch((e) => {
+                console.log('error here', e);
+                return console.error(e);
+            });
     }, [setTransactions]);
 
     const handleSubmit = ({ balance, date, comment }) => {
@@ -26,7 +34,7 @@ export default function Home() {
             id: Date.now(),
         };
 
-        setBalance((c) => c + balance);
+        setBalance((c) => c + +balance);
         setTransactions((currentTransactions) => [
             transaction,
             ...currentTransactions,
@@ -36,7 +44,7 @@ export default function Home() {
     return (
         <ErrorBoundary>
             <HomeDiv>
-                <Balance balance={+balance} />
+                <Balance data-testid="balance" balance={+balance} />
                 <Form handleSubmit={handleSubmit} />
                 {transactions.length > 0 && (
                     <Transactions transactions={transactions} />

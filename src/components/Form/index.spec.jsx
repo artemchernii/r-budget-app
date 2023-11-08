@@ -29,7 +29,6 @@ describe('Form component', () => {
             fireEvent.change(input, { target: { value: '1000' } });
 
             const { value } = input;
-            console.log(typeof value);
             expect(+value).toBe(Number(1000));
         });
         test('should change comment input', () => {
