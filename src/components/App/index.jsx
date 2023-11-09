@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react';
 import { open } from '../../utils/indexdb';
 import Spinner from '../Spinner';
 import { CurrencyProvider } from '../../providers/context';
+import Settings from '../Settings';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -34,6 +35,7 @@ const router = createBrowserRouter(
                 <Route path="/about/:id" element={<AboutContent />} />
             </Route>
             <Route path="/stats" element={<Stats />} />
+            <Route path="/settings" element={<Settings />} />
         </Route>
     )
 );

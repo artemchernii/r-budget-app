@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import Balance from '../Balance';
 import Transactions from '../Transactions/Transactions';
 import Form from '../Form';
@@ -17,6 +17,7 @@ export default function Home() {
         state: { currency },
         dispatch,
     } = useContext(currencyContext);
+
     useEffect(() => {
         getItems()
             .then((items) => {
@@ -40,6 +41,7 @@ export default function Home() {
             date,
             comment,
             id: Date.now(),
+            isFavoured: false,
         };
 
         setBalance((c) => c + +balance);
@@ -54,6 +56,24 @@ export default function Home() {
             type: ACTIONS.CHANGE,
             payload: 'USD',
         });
+    };
+
+    const onDelete = useCallback(
+        (id) => {
+            setTransactions((transactions) =>
+                transactions.filter((t) => {
+                    return t.id !== id;
+                })
+            );
+        },
+        [setTransactions]
+    );
+    const onFavouredClick = (id) => {
+        setTransactions((currentTransactions) =>
+            currentTransactions.map((t) =>
+                t.id === id ? { ...t, isFavoured: !t.isFavoured } : t
+            )
+        );
     };
     return (
         <ErrorBoundary>
@@ -80,7 +100,11 @@ export default function Home() {
 
                 <Form handleSubmit={handleSubmit} />
                 {transactions.length > 0 && (
-                    <Transactions transactions={transactions} />
+                    <Transactions
+                        transactions={transactions}
+                        onDelete={onDelete}
+                        onFavouredClick={onFavouredClick}
+                    />
                 )}
             </HomeDiv>
         </ErrorBoundary>

@@ -35,6 +35,16 @@ const Header = () => {
                         Stats
                     </NavLink>
                 </NavlinkStyles>
+                <NavlinkStyles>
+                    <NavLink
+                        to={`/settings`}
+                        className={({ isActive, isPending }) =>
+                            isPending ? 'pending' : isActive ? 'active' : ''
+                        }
+                    >
+                        Settings
+                    </NavLink>
+                </NavlinkStyles>
             </UlStyles>
         </NavbarStyles>
     );

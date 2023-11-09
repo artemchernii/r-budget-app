@@ -26,9 +26,23 @@ const TransactionComment = styled.div`
 `;
 TransactionComment.displayName = 'CoTransactionComment';
 
+const Icon = styled.span`
+    img {
+        width: 30px;
+        margin-right: 10px;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+`;
+
+Icon.displayName = 'Icon';
+
 export {
     TransactionWrapper,
     TransactionDate,
     TransactionValue,
     TransactionComment,
+    Icon,
 };
