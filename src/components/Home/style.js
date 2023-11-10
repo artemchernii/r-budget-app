@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
     * {
@@ -8,9 +8,9 @@ export const GlobalStyle = createGlobalStyle`
         margin: 0;
         padding: 0;
     }
-`
-export const HomeDiv = styled.div`
+`;
+export const Home = styled.div`
     width: 100%;
-`
+`;
 
-HomeDiv.displayName = 'Home';
+Home.displayName = 'Home';

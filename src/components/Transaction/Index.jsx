@@ -22,6 +22,7 @@ export default function Transaction({
     onFavouredClick,
 }) {
     const { currency } = useContext(currencyContext).state;
+
     const handleDelete = () => {
         onDelete(id);
     };

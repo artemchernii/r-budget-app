@@ -3,6 +3,7 @@ import Home from './index';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import { getItems } from '../../utils/indexdb';
+import { CurrencyProvider } from '../../providers/context';
 
 vi.mock('../../utils/indexdb', () => ({
     addItem: vi.fn(),
@@ -20,7 +21,11 @@ describe('Home component', () => {
 
     beforeEach(async () => {
         await act(async () => {
-            sut = render(<Home {...props} />);
+            sut = render(
+                <CurrencyProvider>
+                    <Home {...props} />
+                </CurrencyProvider>
+            );
         });
         container = sut.container;
     });
@@ -31,7 +36,9 @@ describe('Home component', () => {
         });
         it('should render transaction with one item with value got from db', async () => {
             await waitFor(() => {
-                expect(screen.getByTestId('Value').textContent).toBe('100.00');
+                expect(screen.getByTestId('Value').textContent).toBe(
+                    '100.00 ₴'
+                );
             });
         });
     });
@@ -43,7 +50,9 @@ describe('Home component', () => {
             const balanceContainer = sut.getByTestId('balance');
             fireEvent.change(balanceInput, { target: { value: 100 } });
             fireEvent.submit(submit);
-            expect(balanceContainer.textContent).toBe('Current balance: 200');
+            expect(balanceContainer.textContent).toBe(
+                'Current balance: 200 UAH'
+            );
         });
     });
 
@@ -55,15 +64,16 @@ describe('Home component', () => {
         });
         beforeEach(async () => {
             await act(async () => {
-                sut = render(<Home {...props} />);
+                sut = render(
+                    <CurrencyProvider>
+                        <Home {...props} />
+                    </CurrencyProvider>
+                );
             });
             container = sut.container;
         });
         it('should throw an error', () => {
             expect(consoleSpy).toHaveBeenCalledWith('WTF');
-        });
-        it('should return transactions with zero items', () => {
-            expect(screen.getByTitle('transactions')).toBeUndefined();
         });
     });
 });

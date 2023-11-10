@@ -12,6 +12,7 @@ const Transactions = memo(function Transactions({
         <TransactionList
             additionalprop={'rounded'}
             title="transactions"
+            data-testid="transactions"
             color={'#fff'}
         >
             {transactions.map((t) => (

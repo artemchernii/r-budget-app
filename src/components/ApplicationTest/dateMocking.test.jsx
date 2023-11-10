@@ -5,7 +5,6 @@ const businessHours = [9, 17];
 function purchase() {
     const currentHour = new Date().getHours();
     const [open, close] = businessHours;
-    console.log(currentHour);
     if (currentHour > open && currentHour < close)
         return { message: 'Success' };
 

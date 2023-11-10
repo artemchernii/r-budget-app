@@ -1,112 +1,78 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
+import { useData } from '../../hooks/hooks';
+
+import { Home as HomeWrapper } from './style';
+
 import Balance from '../Balance';
-import Transactions from '../Transactions/Transactions';
 import Form from '../Form';
-import { HomeDiv } from './style';
+import Transactions from '../Transactions/Transactions';
 import ErrorBoundary from '../ErrorBoundaries';
-import { addItem, getItems } from '../../utils/indexdb';
-import {
-    ACTIONS,
-    currencyContext,
-} from '../../providers/context/defaultContext';
+
+import { currencyContext } from '../../providers/context/defaultContext';
+import { STATUS } from '../../constants';
+import ChangeCurrency from '../ChangeCurrency';
 
 export default function Home() {
-    const [balance, setBalance] = useState(0);
-    const [transactions, setTransactions] = useState([]);
+    let content;
     const {
         state: { currency },
-        dispatch,
     } = useContext(currencyContext);
-
-    useEffect(() => {
-        getItems()
-            .then((items) => {
-                setBalance(
-                    items.reduce((acc, item) => {
-                        return Number(acc) + +item.value;
-                    }, 0)
-                );
-                setTransactions(items);
-            })
-            .catch((e) => {
-                console.log('error here', e);
-                return console.error(e);
-            });
-    }, [setTransactions]);
+    const {
+        transactions,
+        balance,
+        status,
+        addTransaction,
+        deleteTransaction,
+        favorTransaction,
+    } = useData();
 
     const handleSubmit = ({ balance, date, comment }) => {
         const transaction = {
-            label: 'Balance increased by',
+            label:
+                balance > 0 ? 'Balance increased by' : 'Balance decreased by',
             value: +balance,
             date,
             comment,
             id: Date.now(),
             isFavoured: false,
         };
-
-        setBalance((c) => c + +balance);
-        setTransactions((currentTransactions) => [
-            transaction,
-            ...currentTransactions,
-        ]);
-        addItem(transaction);
-    };
-    const handleChangeCurrency = () => {
-        dispatch({
-            type: ACTIONS.CHANGE,
-            payload: 'USD',
-        });
+        addTransaction(transaction);
     };
 
-    const onDelete = useCallback(
-        (id) => {
-            setTransactions((transactions) =>
-                transactions.filter((t) => {
-                    return t.id !== id;
-                })
-            );
-        },
-        [setTransactions]
-    );
+    const onDelete = (id) => {
+        deleteTransaction(id);
+    };
     const onFavouredClick = (id) => {
-        setTransactions((currentTransactions) =>
-            currentTransactions.map((t) =>
-                t.id === id ? { ...t, isFavoured: !t.isFavoured } : t
-            )
-        );
+        favorTransaction(id);
     };
-    return (
-        <ErrorBoundary>
-            <HomeDiv>
+
+    const renderedTransactions =
+        transactions.length > 0 ? (
+            <Transactions
+                transactions={transactions}
+                onDelete={onDelete}
+                onFavouredClick={onFavouredClick}
+            />
+        ) : null;
+    if (status === STATUS.pending) {
+        content = <div>Loading...</div>;
+    }
+    if (status === STATUS.success) {
+        content = (
+            <HomeWrapper>
                 <Balance
                     data-testid="balance"
-                    balance={+balance}
+                    balance={balance}
                     currency={currency}
                 />
-
-                <div
-                    className="flex"
-                    style={{
-                        display: 'flex',
-                        width: '100%',
-                        justifyContent: 'center',
-                        margin: '30px 0',
-                    }}
-                >
-                    <button onClick={handleChangeCurrency}>
-                        Change currency
-                    </button>
-                </div>
-
+                <ChangeCurrency />
                 <Form handleSubmit={handleSubmit} />
-                {transactions.length > 0 && (
-                    <Transactions
-                        transactions={transactions}
-                        onDelete={onDelete}
-                        onFavouredClick={onFavouredClick}
-                    />
-                )}
-            </HomeDiv>
-        </ErrorBoundary>
-    );
+                {renderedTransactions}
+            </HomeWrapper>
+        );
+    }
+    if (status === STATUS.error) {
+        content = <div>Something went wrong</div>;
+    }
+    return <ErrorBoundary>{content}</ErrorBoundary>;
 }

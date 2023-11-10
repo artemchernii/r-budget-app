@@ -19,7 +19,6 @@ const reducer = (state, action) => {
 export const CurrencyProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, defaultContext());
 
-    console.log(state);
     const values = {
         state,
         dispatch,
