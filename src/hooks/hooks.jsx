@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { STATUS } from '../constants';
-import { addItem, getItems } from '../utils/indexdb';
+import { addItem, getItems, deleteItem, setFavor } from '../utils/indexdb';
 
 export const useBooleanToggle = (defaultValue = false) => {
     const [state, setState] = useState(defaultValue);
@@ -72,6 +72,7 @@ export const useData = () => {
                     (t) => t.id !== id
                 ),
             }));
+            deleteItem(id);
         },
         [setState]
     );
@@ -84,6 +85,7 @@ export const useData = () => {
                     t.id === id ? { ...t, isFavoured: !t.isFavoured } : t
                 ),
             }));
+            setFavor(id);
         },
         [setState]
     );

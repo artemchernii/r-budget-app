@@ -1,11 +1,9 @@
-const html5rocks = {};
 const DB_VERSION = 1;
 const DB_NAME = 'budget';
 
-html5rocks.indexedDB = {};
-html5rocks.indexedDB.db = null;
+indexedDB.db = null;
 
-html5rocks.indexedDB.onerror = function (e) {
+indexedDB.onerror = function (e) {
     console.log(e);
 };
 
@@ -18,7 +16,7 @@ function open() {
             const db = e.target.result;
 
             // A versionchange transaction is started automatically.
-            e.target.transaction.onerror = html5rocks.indexedDB.onerror;
+            e.target.transaction.onerror = indexedDB.onerror;
 
             if (db.objectStoreNames.contains(DB_NAME)) {
                 db.deleteObjectStore(DB_NAME);
@@ -28,7 +26,7 @@ function open() {
         };
 
         request.onsuccess = function (e) {
-            html5rocks.indexedDB.db = e.target.result;
+            indexedDB.db = e.target.result;
             resolve();
         };
 
@@ -39,7 +37,7 @@ function open() {
 }
 
 function addItem(item) {
-    const db = html5rocks.indexedDB.db;
+    const db = indexedDB.db;
     const trans = db.transaction([DB_NAME], 'readwrite');
     const store = trans.objectStore(DB_NAME);
 
@@ -55,29 +53,24 @@ function addItem(item) {
 }
 
 function deleteItem(id) {
-    const db = html5rocks.indexedDB.db;
-    const trans = db.transaction([DB_NAME], 'readwrite');
-    const store = trans.objectStore(DB_NAME);
+    const request = indexedDB.db
+        .transaction([DB_NAME], 'readwrite')
+        .objectStore(DB_NAME)
+        .delete(id);
 
-    const request = store.delete(id);
-
-    request.onsuccess = function (e) {
-        console.log('success', e);
-    };
-
-    request.onerror = function (e) {
-        console.log('Error Adding: ', e);
+    request.onsuccess = (event) => {
+        console.log('its done', event);
     };
 }
 
 function getItems() {
     return new Promise((resolve, reject) => {
-        var db = html5rocks.indexedDB.db;
+        const db = indexedDB.db;
         if (!db) {
             reject(Error('No db'));
         }
-        var trans = db.transaction([DB_NAME], 'readwrite');
-        var store = trans.objectStore(DB_NAME);
+        const trans = db.transaction([DB_NAME], 'readwrite');
+        const store = trans.objectStore(DB_NAME);
 
         const getAllRequest = store.getAll();
 
@@ -87,4 +80,22 @@ function getItems() {
     });
 }
 
-export { open, addItem, getItems, deleteItem };
+function setFavor(id) {
+    const store = indexedDB.db
+        .transaction([DB_NAME], 'readwrite')
+        .objectStore(DB_NAME);
+    const request = store.get(id);
+    request.onerror = (event) => {
+        console.error('WTF', event.message);
+    };
+
+    request.onsuccess = (event) => {
+        const data = event.target.result;
+        store.put({
+            ...data,
+            isFavoured: !data.isFavoured,
+        });
+    };
+}
+
+export { open, addItem, getItems, deleteItem, setFavor };
