@@ -9,7 +9,7 @@ import {
     Icon,
 } from './style';
 import { useContext } from 'react';
-import { currencyContext } from '../../providers/context/defaultContext';
+import { stateContext } from '../../providers/context/defaultContext';
 import star from '../../assets/star.svg';
 import lightStar from '../../assets/light-star.svg';
 export default function Transaction({
@@ -21,7 +21,7 @@ export default function Transaction({
     isFavoured,
     onFavouredClick,
 }) {
-    const { currency } = useContext(currencyContext).state;
+    const { currency } = useContext(stateContext).state;
 
     const handleDelete = () => {
         onDelete(id);

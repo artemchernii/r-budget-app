@@ -3,10 +3,6 @@
     line-height: 1.5;
     font-weight: 400;
 
-    color-scheme: light dark;
-    background-color: #16161a;
-    color: #fffffe;
-
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -57,15 +53,52 @@ button:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-    :root {
-        color: #213547;
-        background-color: #ffffff;
-    }
-    a:hover {
-        color: #747bff;
-    }
-    button {
-        background-color: #f9f9f9;
-    }
+/* Form input */
+/* Style the container to create a floating label effect */
+form {
+    padding: 20px;
+    margin-left: 40px;
+    width: 60%;
+    border: 3px solid #fffffe;
+    border-radius: 10px;
+}
+.input-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+/* Style the input field */
+.material-input {
+    font-size: 18px;
+    padding: 10px;
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    background-color: transparent;
+    transition: border-bottom-color 0.3s;
+}
+
+.material-input:focus {
+    outline: none;
+    border-bottom-color: #ccc; /* Highlight color when focused */
+}
+
+/* Style the label */
+.material-label {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    font-size: 16px;
+    color: #888;
+    pointer-events: none;
+    transition: top 0.3s, font-size 0.3s;
+}
+
+/* Shrink the label when input is focused or has value */
+.material-input:focus + .material-label,
+.material-input:not(:placeholder-shown) + .material-label {
+    top: -10px;
+    font-size: 14px;
+    color: #ccc; /* Highlight color when focused */
 }

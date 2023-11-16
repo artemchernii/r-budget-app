@@ -1,11 +1,12 @@
 import { NavLink } from 'react-router-dom';
-import { NavbarStyles, UlStyles, NavlinkStyles } from './style';
+import { NavbarStyles, UlStyles, NavLinkStyles } from './style';
+import ThemeSwitch from '../ThemeSwitch/ThemeSwitch';
 
 const Header = () => {
     return (
         <NavbarStyles>
             <UlStyles>
-                <NavlinkStyles>
+                <NavLinkStyles>
                     <NavLink
                         to={`/`}
                         className={({ isActive, isPending }) =>
@@ -14,8 +15,8 @@ const Header = () => {
                     >
                         Home
                     </NavLink>
-                </NavlinkStyles>
-                <NavlinkStyles>
+                </NavLinkStyles>
+                <NavLinkStyles>
                     <NavLink
                         to={`/about`}
                         className={({ isActive, isPending }) =>
@@ -24,8 +25,8 @@ const Header = () => {
                     >
                         About
                     </NavLink>
-                </NavlinkStyles>
-                <NavlinkStyles>
+                </NavLinkStyles>
+                <NavLinkStyles>
                     <NavLink
                         to={`/stats`}
                         className={({ isActive, isPending }) =>
@@ -34,8 +35,8 @@ const Header = () => {
                     >
                         Stats
                     </NavLink>
-                </NavlinkStyles>
-                <NavlinkStyles>
+                </NavLinkStyles>
+                <NavLinkStyles>
                     <NavLink
                         to={`/settings`}
                         className={({ isActive, isPending }) =>
@@ -44,8 +45,9 @@ const Header = () => {
                     >
                         Settings
                     </NavLink>
-                </NavlinkStyles>
+                </NavLinkStyles>
             </UlStyles>
+            <ThemeSwitch />
         </NavbarStyles>
     );
 };

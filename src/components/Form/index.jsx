@@ -1,6 +1,5 @@
 import propTypes from 'prop-types';
 import { useState } from 'react';
-import './style.css';
 
 export default function Form({ handleSubmit }) {
     const [form, setForm] = useState({

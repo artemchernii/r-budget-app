@@ -1,15 +1,16 @@
 import styled from 'styled-components';
 
 const TransactionWrapper = styled.div`
-    background-color: ${({ value }) => (value < 0 ? '#72757e' : '#16161a')};
-    /* border: 1px solid #dbdbdb; */
+    /* background-color: ${({ value }) =>
+        value < 0 ? '#72757e' : '#16161a'}; */
+    background-color: ${({ theme }) => theme.background};
     border-radius: 5px;
     padding: 5px;
-    /* margin-bottom: 10px; */
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fffffe;
+    border: 1px solid ${({ theme }) => theme.color};
+    color: ${({ theme }) => theme.color};
 `;
 TransactionWrapper.displayName = 'TransactionWrapper';
 

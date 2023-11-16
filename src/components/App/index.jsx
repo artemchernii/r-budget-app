@@ -11,12 +11,13 @@ import Home from '../Home';
 import About, { AboutContent } from '../About';
 import Stats from '../Stats';
 import Layout from '../Layout';
-import { useEffect, useState } from 'react';
-
-import { open } from '../../utils/indexdb';
+import { useContext, useEffect, useState } from 'react';
 import Spinner from '../Spinner';
-import { CurrencyProvider } from '../../providers/context';
 import Settings from '../Settings';
+import { open } from '../../utils/indexdb';
+import { ThemeProvider } from 'styled-components';
+import { stateContext } from '../../providers/context/defaultContext';
+import { getTheme } from '../../providers/themes/getTheme';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -41,7 +42,9 @@ const router = createBrowserRouter(
 );
 const App = () => {
     const [loading, setLoading] = useState(true);
-
+    const {
+        state: { theme },
+    } = useContext(stateContext);
     useEffect(() => {
         open().then(() => setLoading(false));
     }, []);
@@ -54,12 +57,12 @@ const App = () => {
         );
     }
     return (
-        <Wrapper>
-            <GlobalStyle />
-            <CurrencyProvider>
+        <ThemeProvider theme={getTheme(theme)}>
+            <Wrapper>
+                <GlobalStyle />
                 <RouterProvider router={router} />
-            </CurrencyProvider>
-        </Wrapper>
+            </Wrapper>
+        </ThemeProvider>
     );
 };
 

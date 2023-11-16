@@ -8,7 +8,7 @@ import Form from '../Form';
 import Transactions from '../Transactions/Transactions';
 import ErrorBoundary from '../ErrorBoundaries';
 
-import { currencyContext } from '../../providers/context/defaultContext';
+import { stateContext } from '../../providers/context/defaultContext';
 import { STATUS } from '../../constants';
 import ChangeCurrency from '../ChangeCurrency';
 
@@ -16,7 +16,7 @@ export default function Home() {
     let content;
     const {
         state: { currency },
-    } = useContext(currencyContext);
+    } = useContext(stateContext);
     const {
         transactions,
         balance,

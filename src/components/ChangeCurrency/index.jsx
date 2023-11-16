@@ -1,14 +1,11 @@
 import { useContext } from 'react';
-import {
-    ACTIONS,
-    currencyContext,
-} from '../../providers/context/defaultContext';
+import { ACTIONS, stateContext } from '../../providers/context/defaultContext';
 
 const ChangeCurrency = () => {
-    const { dispatch } = useContext(currencyContext);
+    const { dispatch } = useContext(stateContext);
     const handleChangeCurrency = () => {
         dispatch({
-            type: ACTIONS.CHANGE,
+            type: ACTIONS.CHANGE_CURRENCY,
             payload: 'USD',
         });
     };
