@@ -1,5 +1,4 @@
-import { GlobalStyle } from '../Home/style';
-import { FlexWrapper, Wrapper } from './style';
+import { useContext, useEffect, useState } from 'react';
 import {
     Link,
     Route,
@@ -7,17 +6,21 @@ import {
     createBrowserRouter,
     createRoutesFromElements,
 } from 'react-router-dom';
+import { open } from '../../utils/indexdb';
+import { stateContext } from '../../providers/context/defaultContext';
+import { getTheme } from '../../providers/themes/getTheme';
+import { ThemeProvider } from 'styled-components';
+import { IntlAppProvider } from '../../providers/i18n';
+
 import Home from '../Home';
 import About, { AboutContent } from '../About';
 import Stats from '../Stats';
 import Layout from '../Layout';
-import { useContext, useEffect, useState } from 'react';
 import Spinner from '../Spinner';
 import Settings from '../Settings';
-import { open } from '../../utils/indexdb';
-import { ThemeProvider } from 'styled-components';
-import { stateContext } from '../../providers/context/defaultContext';
-import { getTheme } from '../../providers/themes/getTheme';
+
+import { GlobalStyle } from '../Home/style';
+import { FlexWrapper, Wrapper } from './style';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -45,6 +48,7 @@ const App = () => {
     const {
         state: { theme },
     } = useContext(stateContext);
+
     useEffect(() => {
         open().then(() => setLoading(false));
     }, []);
@@ -56,11 +60,14 @@ const App = () => {
             </FlexWrapper>
         );
     }
+
     return (
         <ThemeProvider theme={getTheme(theme)}>
             <Wrapper>
                 <GlobalStyle />
-                <RouterProvider router={router} />
+                <IntlAppProvider>
+                    <RouterProvider router={router} />
+                </IntlAppProvider>
             </Wrapper>
         </ThemeProvider>
     );

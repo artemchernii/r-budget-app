@@ -3,6 +3,7 @@ import { ACTIONS, stateContext } from '../../providers/context/defaultContext';
 import { useBooleanToggle } from '../../hooks/hooks';
 import { Button } from '../App/style';
 import { SettingsWrapper } from './style';
+import LanguageSwitch from '../LanguageSwitch';
 
 const Settings = () => {
     const { state, dispatch } = useContext(stateContext);
@@ -60,7 +61,7 @@ const Settings = () => {
             {isAdvancedSettingsShown ? (
                 <div>
                     <h2>Advanced settings</h2>
-                    <p>...</p>
+                    <LanguageSwitch isInSettings />
                 </div>
             ) : null}
         </SettingsWrapper>

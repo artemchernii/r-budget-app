@@ -1,6 +1,8 @@
 import { NavLink } from 'react-router-dom';
 import { NavbarStyles, UlStyles, NavLinkStyles } from './style';
 import ThemeSwitch from '../ThemeSwitch/ThemeSwitch';
+import LanguageSwitch from '../LanguageSwitch';
+import { FormattedMessage } from 'react-intl';
 
 const Header = () => {
     return (
@@ -13,7 +15,7 @@ const Header = () => {
                             isPending ? 'pending' : isActive ? 'active' : ''
                         }
                     >
-                        Home
+                        <FormattedMessage id="menu.home" />
                     </NavLink>
                 </NavLinkStyles>
                 <NavLinkStyles>
@@ -23,7 +25,7 @@ const Header = () => {
                             isPending ? 'pending' : isActive ? 'active' : ''
                         }
                     >
-                        About
+                        <FormattedMessage id="menu.about" />
                     </NavLink>
                 </NavLinkStyles>
                 <NavLinkStyles>
@@ -33,7 +35,7 @@ const Header = () => {
                             isPending ? 'pending' : isActive ? 'active' : ''
                         }
                     >
-                        Stats
+                        <FormattedMessage id="menu.stats" />
                     </NavLink>
                 </NavLinkStyles>
                 <NavLinkStyles>
@@ -43,11 +45,12 @@ const Header = () => {
                             isPending ? 'pending' : isActive ? 'active' : ''
                         }
                     >
-                        Settings
+                        <FormattedMessage id="menu.settings" />
                     </NavLink>
                 </NavLinkStyles>
             </UlStyles>
             <ThemeSwitch />
+            <LanguageSwitch />
         </NavbarStyles>
     );
 };

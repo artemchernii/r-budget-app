@@ -13,6 +13,11 @@ const reducer = (state, action) => {
                 ...state,
                 theme: action.payload,
             };
+        case ACTIONS.SET_LOCALE:
+            return {
+                ...state,
+                locale: action.payload,
+            };
         case ACTIONS.RESET:
             return defaultContext;
         default:

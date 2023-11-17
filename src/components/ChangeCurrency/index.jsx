@@ -3,11 +3,11 @@ import { ACTIONS, stateContext } from '../../providers/context/defaultContext';
 import { Button } from '../App/style';
 
 const ChangeCurrency = () => {
-    const { dispatch } = useContext(stateContext);
+    const { state, dispatch } = useContext(stateContext);
     const handleChangeCurrency = () => {
         dispatch({
             type: ACTIONS.CHANGE_CURRENCY,
-            payload: 'USD',
+            payload: state.currency === 'UAH' ? 'USD' : 'UAH',
         });
     };
     return (
@@ -20,7 +20,9 @@ const ChangeCurrency = () => {
                 margin: '30px 0',
             }}
         >
-            <Button onClick={handleChangeCurrency}>Change to USD</Button>
+            <Button onClick={handleChangeCurrency}>
+                Change to {state.currency === 'UAH' ? 'USD' : 'UAH'}
+            </Button>
         </div>
     );
 };

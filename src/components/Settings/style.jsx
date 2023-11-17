@@ -7,6 +7,13 @@ export const SettingsWrapper = styled.div`
         margin: 5px 0;
     }
 
+    select {
+        background: transparent;
+        border-radius: 5px;
+        color: #fffffe;
+        cursor: pointer;
+    }
+
     form {
         display: flex;
         flex-direction: column;
