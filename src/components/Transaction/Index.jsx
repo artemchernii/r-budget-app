@@ -12,6 +12,7 @@ import { useContext } from 'react';
 import { stateContext } from '../../providers/context/defaultContext';
 import star from '../../assets/star.svg';
 import lightStar from '../../assets/light-star.svg';
+import { Button } from '../App/style';
 export default function Transaction({
     value,
     date,
@@ -23,6 +24,9 @@ export default function Transaction({
 }) {
     const { currency } = useContext(stateContext).state;
 
+    const {
+        state: { theme },
+    } = useContext(stateContext);
     const handleDelete = () => {
         onDelete(id);
     };
@@ -32,7 +36,7 @@ export default function Transaction({
             value={value}
             className={style.transaction}
         >
-            <Icon onClick={() => onFavouredClick(id)}>
+            <Icon currentTheme={theme} onClick={() => onFavouredClick(id)}>
                 <img src={isFavoured ? lightStar : star} alt="star" />
             </Icon>
             <TransactionValue data-testid="Value">
@@ -41,7 +45,7 @@ export default function Transaction({
             </TransactionValue>
             <TransactionDate>{date}</TransactionDate>
             <TransactionComment>{comment}</TransactionComment>
-            <button onClick={handleDelete}>Delete</button>
+            <Button onClick={handleDelete}>Delete</Button>
         </TransactionWrapper>
     );
 }

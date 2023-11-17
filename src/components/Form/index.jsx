@@ -1,5 +1,8 @@
 import propTypes from 'prop-types';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { FormWrapper } from './style';
+import { stateContext } from '../../providers/context/defaultContext';
+import { Button } from '../App/style';
 
 export default function Form({ handleSubmit }) {
     const [form, setForm] = useState({
@@ -7,6 +10,10 @@ export default function Form({ handleSubmit }) {
         date: new Date().toISOString().substring(0, 10),
         comment: '',
     });
+
+    const {
+        state: { theme },
+    } = useContext(stateContext);
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -31,7 +38,7 @@ export default function Form({ handleSubmit }) {
     };
 
     return (
-        <form onSubmit={onSubmit} title="test-form">
+        <FormWrapper currentTheme={theme} onSubmit={onSubmit} title="test-form">
             <div className="input-container">
                 <input
                     type="date"
@@ -67,8 +74,8 @@ export default function Form({ handleSubmit }) {
                 />
                 <label className="material-label">Comment</label>
             </div>
-            <button type="submit">Save</button>
-        </form>
+            <Button type="submit">Save</Button>
+        </FormWrapper>
     );
 }
 

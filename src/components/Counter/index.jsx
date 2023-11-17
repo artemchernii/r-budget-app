@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
+import { Button } from '../App/style';
 
 const Counter = () => {
     const [clicks, setClicks] = useState(0);
@@ -27,7 +28,7 @@ const Counter = () => {
         <Fragment>
             <div>Clicked: {clicks}</div>
             <div>{currentValue.current}</div>
-            <button onClick={() => setClicks((c) => c + step)}>Click</button>
+            <Button onClick={() => setClicks((c) => c + step)}>Click</Button>
             <br />
             <input
                 ref={ref}
@@ -36,9 +37,9 @@ const Counter = () => {
                 onChange={(e) => setStep(+e.target.value)}
             />
             <br />
-            <button style={{ marginTop: '10px' }} onClick={onDelayShow}>
+            <Button style={{ marginTop: '10px' }} onClick={onDelayShow}>
                 Show values with 3s delay
-            </button>
+            </Button>
         </Fragment>
     );
 };

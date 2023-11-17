@@ -6,7 +6,16 @@ export default function Layout() {
         <>
             <Header />
 
-            <Outlet />
+            <div
+                style={{
+                    minHeight: '89.8vh',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
+                <Outlet />
+            </div>
         </>
     );
 }

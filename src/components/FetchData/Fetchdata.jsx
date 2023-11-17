@@ -12,8 +12,8 @@ const Fetchdata = () => {
             <User user={users} />
         );
     return (
-        <div>
-            <h1>Fetch profile</h1>
+        <div style={{ textAlign: 'center' }}>
+            <h3>Fetch profile</h3>
             <input
                 type="text"
                 max={10}
@@ -21,7 +21,7 @@ const Fetchdata = () => {
                 onChange={(event) => handleQuery(event)}
             />
             {query}
-            <hr />
+
             {isLoading && !isError ? (
                 <div>Is loading...</div>
             ) : isError ? (
@@ -36,11 +36,11 @@ const Fetchdata = () => {
 export const User = ({ user }) => (
     <div
         style={{
-            border: '3px solid #fff',
-            padding: '20px',
-            borderRadius: '10px',
+            border: '1px solid #333',
+            margin: '10px 0',
+            padding: '10px',
+            borderRadius: '2px',
             width: '400px',
-            margin: '10px',
         }}
     >
         <h2>{user.username}</h2>

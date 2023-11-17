@@ -1,3 +1,5 @@
+import { Button } from '../App/style';
+
 const ApplicationForm = () => {
     return (
         <>
@@ -22,7 +24,7 @@ const ApplicationForm = () => {
                         onChange={(e) => console.log(e.target.value)}
                     />
                 </div>
-                <button>Submit</button>
+                <Button>Submit</Button>
             </form>
         </>
     );

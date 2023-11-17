@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { ACTIONS, stateContext } from '../../providers/context/defaultContext';
+import { Button } from '../App/style';
 
 const ChangeCurrency = () => {
     const { dispatch } = useContext(stateContext);
@@ -19,7 +20,7 @@ const ChangeCurrency = () => {
                 margin: '30px 0',
             }}
         >
-            <button onClick={handleChangeCurrency}>Change currency</button>
+            <Button onClick={handleChangeCurrency}>Change to USD</Button>
         </div>
     );
 };

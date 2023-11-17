@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { THEMES } from '../../providers/themes/themeList';
 
 const TransactionWrapper = styled.div`
     /* background-color: ${({ value }) =>
@@ -28,9 +29,17 @@ const TransactionComment = styled.div`
 TransactionComment.displayName = 'CoTransactionComment';
 
 const Icon = styled.span`
+    background-color: ${({ currentTheme }) =>
+        currentTheme === THEMES.LIGHT ? '#72757e' : ''};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    padding-bottom: 2px;
+    border-radius: 10%;
     img {
         width: 30px;
-        margin-right: 10px;
+        height: 30px;
 
         &:hover {
             cursor: pointer;
