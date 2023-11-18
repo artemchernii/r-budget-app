@@ -38,7 +38,7 @@ export default function Form({ handleSubmit }) {
     };
 
     return (
-        <FormWrapper currentTheme={theme} onSubmit={onSubmit} title="test-form">
+        <FormWrapper currenttheme={theme} onSubmit={onSubmit} title="test-form">
             <div className="input-container">
                 <input
                     type="date"

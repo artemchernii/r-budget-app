@@ -29,8 +29,8 @@ const TransactionComment = styled.div`
 TransactionComment.displayName = 'CoTransactionComment';
 
 const Icon = styled.span`
-    background-color: ${({ currentTheme }) =>
-        currentTheme === THEMES.LIGHT ? '#72757e' : ''};
+    background-color: ${({ currenttheme }) =>
+        currenttheme === THEMES.LIGHT ? '#72757e' : ''};
     display: flex;
     justify-content: center;
     align-items: center;

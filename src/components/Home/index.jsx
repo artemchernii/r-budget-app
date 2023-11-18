@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useData } from '../../hooks/hooks';
 
 import { Home as HomeWrapper } from './style';
@@ -11,6 +11,8 @@ import ErrorBoundary from '../ErrorBoundaries';
 import { stateContext } from '../../providers/context/defaultContext';
 import { STATUS } from '../../constants';
 import ChangeCurrency from '../ChangeCurrency';
+import Modal from '../Modal';
+import { Button } from '../App/style';
 
 export default function Home() {
     let content;
@@ -25,6 +27,7 @@ export default function Home() {
         deleteTransaction,
         favorTransaction,
     } = useData();
+    const [isOpenModal, setIsOpenModal] = useState(false);
 
     const handleSubmit = ({ balance, date, comment }) => {
         const transaction = {
@@ -37,6 +40,7 @@ export default function Home() {
             isFavoured: false,
         };
         addTransaction(transaction);
+        setIsOpenModal(false);
     };
 
     const onDelete = (id) => {
@@ -66,7 +70,12 @@ export default function Home() {
                     currency={currency}
                 />
                 <ChangeCurrency />
-                <Form handleSubmit={handleSubmit} />
+                <Button onClick={() => setIsOpenModal(true)}>
+                    Add transaction
+                </Button>
+                <Modal open={isOpenModal} onClose={() => setIsOpenModal(false)}>
+                    <Form handleSubmit={handleSubmit} />
+                </Modal>
                 {renderedTransactions}
             </HomeWrapper>
         );

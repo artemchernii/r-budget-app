@@ -3,7 +3,6 @@ import { THEMES } from '../../providers/themes/themeList';
 
 const FormWrapper = styled.form`
     padding: 20px;
-    width: 50%;
     border: 1px solid ${({ theme }) => theme.color};
     border-radius: 3px;
 
@@ -35,8 +34,8 @@ const FormWrapper = styled.form`
         left: 10px;
         top: 10px;
         font-size: 16px;
-        color: ${({ currentTheme }) =>
-            currentTheme === THEMES.LIGHT ? '#000' : '#888'};
+        color: ${({ currenttheme }) =>
+            currenttheme === THEMES.LIGHT ? '#000' : '#888'};
         pointer-events: none;
         transition: top 0.3s, font-size 0.3s;
     }
@@ -45,8 +44,8 @@ const FormWrapper = styled.form`
     .material-input:not(:placeholder-shown) + .material-label {
         top: -10px;
         font-size: 14px;
-        color: ${({ currentTheme }) =>
-            currentTheme === THEMES.LIGHT ? '#000' : '#888'};
+        color: ${({ currenttheme }) =>
+            currenttheme === THEMES.LIGHT ? '#000' : '#888'};
     }
 `;
 

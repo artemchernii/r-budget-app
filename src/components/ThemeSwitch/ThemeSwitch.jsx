@@ -13,7 +13,6 @@ const ThemeSwitch = () => {
         state: { theme },
         dispatch,
     } = useContext(stateContext);
-    console.log(theme);
     const setTheme = (themeName) => {
         dispatch({
             type: ACTIONS.SET_THEME,

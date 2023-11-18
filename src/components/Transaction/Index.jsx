@@ -36,7 +36,7 @@ export default function Transaction({
             value={value}
             className={style.transaction}
         >
-            <Icon currentTheme={theme} onClick={() => onFavouredClick(id)}>
+            <Icon currenttheme={theme} onClick={() => onFavouredClick(id)}>
                 <img src={isFavoured ? lightStar : star} alt="star" />
             </Icon>
             <TransactionValue data-testid="Value">
