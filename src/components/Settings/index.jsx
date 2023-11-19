@@ -4,6 +4,7 @@ import { useBooleanToggle } from '../../hooks/hooks';
 import { Button } from '../App/style';
 import { SettingsWrapper } from './style';
 import LanguageSwitch from '../LanguageSwitch';
+import { FormattedMessage } from 'react-intl';
 
 const Settings = () => {
     const { state, dispatch } = useContext(stateContext);
@@ -28,10 +29,14 @@ const Settings = () => {
 
     return (
         <SettingsWrapper>
-            <h1>Settings</h1>
+            <h1>
+                <FormattedMessage id="settings.title" />
+            </h1>
 
             <form onSubmit={handleSubmitSettings}>
-                <label htmlFor="currency">Currency:</label>
+                <label htmlFor="currency">
+                    <FormattedMessage id="settings.currency" />:{' '}
+                </label>
                 <select
                     name="currency"
                     id="currency"
@@ -42,25 +47,34 @@ const Settings = () => {
                     <option value={'USD'}>USD</option>
                     <option value={'EUR'}>EUR</option>
                 </select>
-                <label htmlFor="theme">Theme:</label>
+                <label htmlFor="theme">
+                    <FormattedMessage id="theme.title" />:{' '}
+                </label>
                 <select
                     name="theme"
                     id="theme"
                     onChange={(e) => setSelectedTheme(e.target.value)}
                     value={selectedTheme}
                 >
-                    <option value={'BASIC'}>BASIC</option>
-                    <option value={'DARK'}>DARK</option>
-                    <option value={'LIGHT'}>LIGHT</option>
+                    <option value={'BASIC'}>
+                        <FormattedMessage id="theme.basic" />
+                    </option>
+                    <option value={'DARK'}>
+                        <FormattedMessage id="theme.dark" />
+                    </option>
+                    <option value={'LIGHT'}>
+                        <FormattedMessage id="theme.light" />
+                    </option>
                 </select>
-                <Button type="submit">Save settings</Button>
+                <Button type="submit">
+                    <FormattedMessage id="button.save" />
+                </Button>
             </form>
             <Button onClick={() => setIsAdvancedSettingsShown((c) => !c)}>
-                Show advanced settings
+                <FormattedMessage id="settings.advancedSettings" />
             </Button>
             {isAdvancedSettingsShown ? (
                 <div>
-                    <h2>Advanced settings</h2>
                     <LanguageSwitch isInSettings />
                 </div>
             ) : null}

@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 import { useData } from '../../hooks/hooks';
+import { FormattedMessage } from 'react-intl';
 
 import { Home as HomeWrapper } from './style';
 
@@ -71,7 +72,7 @@ export default function Home() {
                 />
                 <ChangeCurrency />
                 <Button onClick={() => setIsOpenModal(true)}>
-                    Add transaction
+                    <FormattedMessage id="button.addTransaction" />
                 </Button>
                 <Modal open={isOpenModal} onClose={() => setIsOpenModal(false)}>
                     <Form handleSubmit={handleSubmit} />

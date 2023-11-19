@@ -3,6 +3,7 @@ import { useContext, useState } from 'react';
 import { FormWrapper } from './style';
 import { stateContext } from '../../providers/context/defaultContext';
 import { Button } from '../App/style';
+import { FormattedMessage } from 'react-intl';
 
 export default function Form({ handleSubmit }) {
     const [form, setForm] = useState({
@@ -48,7 +49,9 @@ export default function Form({ handleSubmit }) {
                     value={form.date}
                     onChange={handleBalanceChange}
                 />
-                <label className="material-label">Date</label>
+                <label className="material-label">
+                    <FormattedMessage id="form.date" />
+                </label>
             </div>
             <div className="input-container">
                 <input
@@ -61,7 +64,7 @@ export default function Form({ handleSubmit }) {
                     id="balance"
                 />
                 <label htmlFor="balance" className="material-label">
-                    New sum
+                    <FormattedMessage id="form.newSum" />
                 </label>
             </div>
             <div className="input-container">
@@ -72,9 +75,13 @@ export default function Form({ handleSubmit }) {
                     value={form.comment}
                     onChange={handleBalanceChange}
                 />
-                <label className="material-label">Comment</label>
+                <label className="material-label">
+                    <FormattedMessage id="form.comment" />
+                </label>
             </div>
-            <Button type="submit">Save</Button>
+            <Button type="submit">
+                <FormattedMessage id="button.save" />
+            </Button>
         </FormWrapper>
     );
 }

@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { ACTIONS, stateContext } from '../../providers/context/defaultContext';
 import { Button } from '../App/style';
+import { FormattedMessage } from 'react-intl';
 
 const ChangeCurrency = () => {
     const { state, dispatch } = useContext(stateContext);
@@ -21,7 +22,11 @@ const ChangeCurrency = () => {
             }}
         >
             <Button onClick={handleChangeCurrency}>
-                Change to {state.currency === 'UAH' ? 'USD' : 'UAH'}
+                {state.currency === 'UAH' ? (
+                    <FormattedMessage id="button.changeToUSD" />
+                ) : (
+                    <FormattedMessage id="button.changeToUAH" />
+                )}
             </Button>
         </div>
     );

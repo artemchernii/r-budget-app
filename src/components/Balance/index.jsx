@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import propTypes from 'prop-types';
 import { BalanceDiv } from './style';
-import { FormattedNumber } from 'react-intl';
+import { FormattedNumber, FormattedMessage } from 'react-intl';
 export default function Balance({ balance, currency }) {
     return (
         <div>
@@ -10,7 +10,7 @@ export default function Balance({ balance, currency }) {
                 data-title="balance"
                 data-testid="balance"
             >
-                Current balance:{' '}
+                <FormattedMessage id="balance.current" />
                 <FormattedNumber
                     value={balance}
                     style="currency"

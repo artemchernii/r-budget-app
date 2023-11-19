@@ -10,7 +10,7 @@ export const SettingsWrapper = styled.div`
     select {
         background: transparent;
         border-radius: 5px;
-        color: #fffffe;
+        color: ${({ theme }) => theme.color};
         cursor: pointer;
     }
 
@@ -31,7 +31,7 @@ export const SettingsWrapper = styled.div`
         }
 
         button {
-            width: 70%;
+            width: 50%;
             margin-top: 10px;
         }
     }

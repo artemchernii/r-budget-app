@@ -8,6 +8,7 @@ import {
     TransactionComment,
     Icon,
 } from './style';
+import { FormattedMessage } from 'react-intl';
 import { useContext } from 'react';
 import { stateContext } from '../../providers/context/defaultContext';
 import star from '../../assets/star.svg';
@@ -45,7 +46,9 @@ export default function Transaction({
             </TransactionValue>
             <TransactionDate>{date}</TransactionDate>
             <TransactionComment>{comment}</TransactionComment>
-            <Button onClick={handleDelete}>Delete</Button>
+            <Button onClick={handleDelete}>
+                <FormattedMessage id="button.delete" />
+            </Button>
         </TransactionWrapper>
     );
 }

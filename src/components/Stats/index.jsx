@@ -15,38 +15,45 @@ const list = new Array(20)
     .map(() => `Item is ${Math.floor(Math.random() * 100) + 1}`);
 
 const List = memo(({ list }) => {
-    return (
-        <ul>
-            {list.map((el) => (
-                <li key={Math.ceil(Math.random() * 10000000)}>{el}</li>
-            ))}
-        </ul>
-    );
-});
-List.displayName = 'List';
-
-export default function Stats() {
-    const [n, setN] = useState(0);
     const [filter, setFilter] = useState('');
-
     const filteredList = useMemo(
         () => list.filter((el) => el.includes(filter)),
-        [filter]
+        [list, filter]
     );
 
     return (
-        <StatsWrapper>
-            <h1>Stats</h1>
+        <>
             <input
                 type="text"
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)}
             />
-            <hr />
-            {n}
-            <button onClick={() => setN((c) => c + 1)}>Click</button>
-            <hr />
-            <List list={filteredList} />
+            <ul>
+                {filteredList.map((el) => (
+                    <li key={Math.ceil(Math.random() * 10000000)}>{el}</li>
+                ))}
+            </ul>
+        </>
+    );
+});
+List.displayName = 'List';
+
+export const Clicker = ({ children }) => {
+    const [n, setN] = useState(0);
+    return (
+        <>
+            {children}
+            <button onClick={() => setN((c) => c + 1)}>Click {n}</button>
+        </>
+    );
+};
+
+export default function Stats() {
+    return (
+        <StatsWrapper>
+            <h1>Stats</h1>
+            <Clicker />
+            <List list={list} />
         </StatsWrapper>
     );
 }
