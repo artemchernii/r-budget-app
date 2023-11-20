@@ -19,6 +19,7 @@
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-router-dom": "^6.18.0",
+        "react-virtualized": "https://github.com/samarai-project/react-virtualized-fixed.git",
         "styled-components": "^6.1.0"
     },
     "devDependencies": {
@@ -48,6 +49,7 @@
         "jsdom": "^22.1.0",
         "prop-types": "^15.8.1",
         "react-intl": "^6.5.5",
+        "react-virtualized-auto-sizer": "^1.0.20",
         "storybook": "^7.5.2",
         "vite": "^4.4.5",
         "vitest": "^0.34.6"

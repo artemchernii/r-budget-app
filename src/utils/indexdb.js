@@ -80,6 +80,38 @@ function getItems() {
     });
 }
 
+function getData(start, total) {
+    return new Promise(function (resolve, reject) {
+        const db = indexedDB.db;
+        const t = db.transaction([DB_NAME], 'readonly');
+        const store = t.objectStore(DB_NAME);
+        const transactions = [];
+        let hasSkipped = false;
+
+        store.openCursor(null, 'prev').onsuccess = function (e) {
+            var cursor = e.target.result;
+            if (!hasSkipped && start > 0) {
+                hasSkipped = true;
+                cursor.advance(start);
+                return;
+            }
+            if (cursor) {
+                transactions.push(cursor.value);
+                if (transactions.length < total) {
+                    cursor.continue();
+                } else {
+                    resolve(transactions);
+                }
+            } else {
+                resolve(transactions);
+            }
+        };
+        store.openCursor(null, 'prev').onerror = function (e) {
+            reject(e);
+        };
+    });
+}
+
 function setFavor(id) {
     const store = indexedDB.db
         .transaction([DB_NAME], 'readwrite')
@@ -98,4 +130,4 @@ function setFavor(id) {
     };
 }
 
-export { open, addItem, getItems, deleteItem, setFavor };
+export { open, addItem, getItems, deleteItem, setFavor, getData };

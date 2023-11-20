@@ -1,6 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import { STATUS } from '../constants';
-import { addItem, getItems, deleteItem, setFavor } from '../utils/indexdb';
+import {
+    addItem,
+    // getItems,
+    deleteItem,
+    setFavor,
+    getData,
+} from '../utils/indexdb';
 
 export const useBooleanToggle = (defaultValue = false) => {
     const [state, setState] = useState(defaultValue);
@@ -18,6 +24,7 @@ export const useData = () => {
         transactions: [],
         error: null,
         status: STATUS.idle,
+        hasNextPage: true,
     });
 
     useEffect(() => {
@@ -25,7 +32,8 @@ export const useData = () => {
             ...currentState,
             status: STATUS.pending,
         }));
-        getItems()
+
+        getData(0, 10)
             .then((items) => {
                 setState((currentState) => {
                     return {
@@ -35,6 +43,7 @@ export const useData = () => {
                         }, 0),
                         transactions: items,
                         status: STATUS.success,
+                        hasNextPage: true,
                     };
                 });
             })
@@ -46,11 +55,65 @@ export const useData = () => {
                         transactions: [],
                         error: e,
                         status: STATUS.error,
+                        hasNextPage: false,
                     };
                 });
                 return console.error(e);
             });
+
+        // getItems()
+        //     .then((items) => {
+        //         setState((currentState) => {
+        //             return {
+        //                 ...currentState,
+        //                 balance: items.reduce((acc, item) => {
+        //                     return Number(acc) + +item.value;
+        //                 }, 0),
+        //                 transactions: items,
+        //                 status: STATUS.success,
+        //             };
+        //         });
+        //     })
+        //     .catch((e) => {
+        //         console.log('error here', e);
+        //         setState((currentStatus) => {
+        //             return {
+        //                 ...currentStatus,
+        //                 transactions: [],
+        //                 error: e,
+        //                 status: STATUS.error,
+        //             };
+        //         });
+        //         return console.error(e);
+        //     });
     }, []);
+
+    const loadMoreRows = useCallback(() => {
+        setState((currentState) => ({
+            ...currentState,
+            status: STATUS.pending,
+        }));
+
+        getData(state.transactions.length, 10)
+            .then((items) => {
+                setState((currentState) => ({
+                    ...currentState,
+                    transactions: [...currentState.transactions, ...items],
+                    status: STATUS.success,
+                }));
+            })
+            .catch((e) => {
+                setState((currentStatus) => {
+                    return {
+                        ...currentStatus,
+                        transactions: [],
+                        error: e,
+                        status: STATUS.error,
+                        hasNextPage: false,
+                    };
+                });
+            });
+    }, [state]);
 
     const addTransaction = useCallback(
         (transaction) => {
@@ -90,5 +153,11 @@ export const useData = () => {
         [setState]
     );
 
-    return { ...state, addTransaction, deleteTransaction, favorTransaction };
+    return {
+        ...state,
+        addTransaction,
+        deleteTransaction,
+        favorTransaction,
+        loadMoreRows,
+    };
 };

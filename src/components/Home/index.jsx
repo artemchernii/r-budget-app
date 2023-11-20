@@ -16,7 +16,6 @@ import Modal from '../Modal';
 import { Button } from '../App/style';
 
 export default function Home() {
-    let content;
     const {
         state: { currency },
     } = useContext(stateContext);
@@ -27,6 +26,8 @@ export default function Home() {
         addTransaction,
         deleteTransaction,
         favorTransaction,
+        hasNextPage,
+        loadMoreRows,
     } = useData();
     const [isOpenModal, setIsOpenModal] = useState(false);
 
@@ -54,16 +55,20 @@ export default function Home() {
     const renderedTransactions =
         transactions.length > 0 ? (
             <Transactions
+                isNextPageLoading={status === STATUS.pending}
                 transactions={transactions}
                 onDelete={onDelete}
                 onFavouredClick={onFavouredClick}
+                hasNextPage={hasNextPage}
+                loadMoreRows={loadMoreRows}
             />
         ) : null;
-    if (status === STATUS.pending) {
-        content = <div>Loading...</div>;
+
+    if (status === STATUS.error) {
+        return <div>Something went wrong</div>;
     }
-    if (status === STATUS.success) {
-        content = (
+    return (
+        <ErrorBoundary>
             <HomeWrapper>
                 <Balance
                     data-testid="balance"
@@ -79,10 +84,6 @@ export default function Home() {
                 </Modal>
                 {renderedTransactions}
             </HomeWrapper>
-        );
-    }
-    if (status === STATUS.error) {
-        content = <div>Something went wrong</div>;
-    }
-    return <ErrorBoundary>{content}</ErrorBoundary>;
+        </ErrorBoundary>
+    );
 }
