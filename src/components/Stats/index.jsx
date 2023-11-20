@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { memo, useMemo, useState } from 'react';
 import styled from 'styled-components';
+import withProfiler from '../HOCs/withProfiler';
 
 const StatsWrapper = styled.div`
     display: flex;
@@ -48,7 +49,7 @@ export const Clicker = ({ children }) => {
     );
 };
 
-export default function Stats() {
+const Stats = () => {
     return (
         <StatsWrapper>
             <h1>Stats</h1>
@@ -56,4 +57,5 @@ export default function Stats() {
             <List list={list} />
         </StatsWrapper>
     );
-}
+};
+export default withProfiler(Stats, 'Stats');
