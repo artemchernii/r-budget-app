@@ -2,6 +2,7 @@
 import { memo, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import withProfiler from '../HOCs/withProfiler';
+import RenderProps from '../RenderProps';
 
 const StatsWrapper = styled.div`
     display: flex;
@@ -39,11 +40,11 @@ const List = memo(({ list }) => {
 });
 List.displayName = 'List';
 
-export const Clicker = ({ children }) => {
+export const Clicker = ({ children, text = '123' }) => {
     const [n, setN] = useState(0);
     return (
         <>
-            {children}
+            {children}- {text}
             <button onClick={() => setN((c) => c + 1)}>Click {n}</button>
         </>
     );
@@ -55,6 +56,9 @@ const Stats = () => {
             <h1>Stats</h1>
             <Clicker />
             <List list={list} />
+            <RenderProps
+                render={(text) => <Clicker text={text}>123123</Clicker>}
+            />
         </StatsWrapper>
     );
 };

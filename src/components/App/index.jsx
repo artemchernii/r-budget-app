@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, lazy, Suspense } from 'react';
 import {
     Link,
     Route,
@@ -14,13 +14,15 @@ import { IntlAppProvider } from '../../providers/i18n';
 
 import Home from '../Home';
 import About, { AboutContent } from '../About';
-import Stats from '../Stats';
+// import Stats from '../Stats';
 import Layout from '../Layout';
 import Spinner from '../Spinner';
 import Settings from '../Settings';
 
 import { GlobalStyle } from '../Home/style';
 import { FlexWrapper, Wrapper } from './style';
+
+const Stats = lazy(() => import('../Stats'));
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -38,7 +40,14 @@ const router = createBrowserRouter(
                 <Route index element={<AboutContent />} />
                 <Route path="/about/:id" element={<AboutContent />} />
             </Route>
-            <Route path="/stats" element={<Stats />} />
+            <Route
+                path="/stats"
+                element={
+                    <Suspense fallback={<p> Loading... suspense</p>}>
+                        <Stats />
+                    </Suspense>
+                }
+            />
             <Route path="/settings" element={<Settings />} />
         </Route>
     )
