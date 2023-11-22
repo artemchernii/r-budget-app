@@ -1,6 +1,6 @@
 # React practice (Budget App)
 
-![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+![alt text](https://github.com/artemchernii/react-practice-budget-app/blob/master/public/screenbudget.png?raw=true)
 
 -   React (vite)
 -   React-router
