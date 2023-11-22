@@ -60,32 +60,6 @@ export const useData = () => {
                 });
                 return console.error(e);
             });
-
-        // getItems()
-        //     .then((items) => {
-        //         setState((currentState) => {
-        //             return {
-        //                 ...currentState,
-        //                 balance: items.reduce((acc, item) => {
-        //                     return Number(acc) + +item.value;
-        //                 }, 0),
-        //                 transactions: items,
-        //                 status: STATUS.success,
-        //             };
-        //         });
-        //     })
-        //     .catch((e) => {
-        //         console.log('error here', e);
-        //         setState((currentStatus) => {
-        //             return {
-        //                 ...currentStatus,
-        //                 transactions: [],
-        //                 error: e,
-        //                 status: STATUS.error,
-        //             };
-        //         });
-        //         return console.error(e);
-        //     });
     }, []);
 
     const loadMoreRows = useCallback(() => {
