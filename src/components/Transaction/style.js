@@ -12,6 +12,7 @@ const TransactionWrapper = styled.div`
     justify-content: center;
     border: 1px solid ${({ theme }) => theme.color};
     color: ${({ theme }) => theme.color};
+    margin: 0;
 `;
 TransactionWrapper.displayName = 'TransactionWrapper';
 
